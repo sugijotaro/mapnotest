@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 
-class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate{
+class ViewController: UIViewController, UITabBarDelegate, CLLocationManagerDelegate, GMSMapViewDelegate{
     
     var mapView: GMSMapView!
     var camera: GMSCameraPosition!
@@ -17,10 +17,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
     private var currentLocation: CLLocation?
     private var zoomLevel: Float = 17.8
     
-//    @IBOutlet var tabBar: UITabBar!
+    @IBOutlet var tabBar : UITabBar!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.tabBar.delegate = self
         
         // GoogleMapの初期化
         self.mapView.isMyLocationEnabled = true
@@ -41,16 +42,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
         mapView.settings.myLocationButton = false
     }
     
-//    func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem){
-//        switch item.tag {
-//        case 1:
-//            print("1")
-//        case 2:
-//            print("2")
-//        default:
-//            return
-//        }
-//    }
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem){
+        switch item.tag {
+        case 1:
+            print("1")
+        case 2:
+            print("2")
+        default:
+            return
+        }
+    }
 
     override func loadView() {
         let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: self.zoomLevel, bearing: 0, viewingAngle: 45)
