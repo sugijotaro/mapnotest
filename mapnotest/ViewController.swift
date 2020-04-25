@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITabBarDelegate, CLLocationManagerDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.tabBar.delegate = self
+        tabBar.delegate = self
         
         // GoogleMapの初期化
         self.mapView.isMyLocationEnabled = true
@@ -40,22 +40,37 @@ class ViewController: UIViewController, UITabBarDelegate, CLLocationManagerDeleg
         
         mapView.settings.compassButton = true
         mapView.settings.myLocationButton = false
+        
+        mapView.padding = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem){
         switch item.tag {
         case 1:
             print("1")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                tabBar.selectedItem = nil
+            }
         case 2:
             print("2")
+            self.performSegue(withIdentifier: "segue2", sender: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                tabBar.selectedItem = nil
+            }
+        case 3:
+            print("3")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                tabBar.selectedItem = nil
+            }
         default:
             return
         }
     }
 
     override func loadView() {
+        super.loadView()
         let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: self.zoomLevel, bearing: 0, viewingAngle: 45)
-        mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        mapView = GMSMapView.map(withFrame: CGRect.init(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height), camera: camera)
         mapView.settings.scrollGestures = false
         mapView.settings.zoomGestures = true
         mapView.settings.tiltGestures = false
@@ -73,7 +88,8 @@ class ViewController: UIViewController, UITabBarDelegate, CLLocationManagerDeleg
             NSLog("One or more of the map styles failed to load. \(error)")
         }
         
-        self.view = mapView
+        view.addSubview(mapView)
+        self.view.sendSubviewToBack(mapView)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
