@@ -24,6 +24,8 @@ class SelectCourseViewController: UITableViewController, UINavigationBarDelegate
     private var openedSections = Set<Int>()
 
     var strNumber :Int = 0
+    
+    private var previewingViewController: UIViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +34,6 @@ class SelectCourseViewController: UITableViewController, UINavigationBarDelegate
         self.navigationItem.largeTitleDisplayMode = .always
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonHiddenItem: .Previous, target: self, action: #selector(barButtonTapped(_:)))
-        
         
         
         if let csvPath = Bundle.main.path(forResource: "course", ofType: "csv") {
@@ -120,10 +121,6 @@ class SelectCourseViewController: UITableViewController, UINavigationBarDelegate
                 self.performSegue(withIdentifier: "toCourseView", sender: nil)
             }
         }
-    }
-    
-    func setNextView(){
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
